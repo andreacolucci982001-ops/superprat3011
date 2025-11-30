@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperPractice - Practice anywhere, as much as possible</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-text h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filters select {
+            padding: 10px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9em;
+            min-width: 140px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .filters select:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .filters select option {
+            background: #2c3e50;
+            color: white;
+        }
+
+        /* Layout principale */
+        .content {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #1a2a3a 0%, #2c3e50 100%);
+            border-right: 1px solid #34495e;
+            padding: 30px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 35px;
+        }
+
+        .nav-title {
+            font-size: 0.75em;
+            font-weight: 700;
+            color: #3498db;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            padding: 0 25px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 16px 25px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+            color: #bdc3c7;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(52, 152, 219, 0.15);
+            color: #ecf0f1;
+            border-left-color: #3498db;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            color: white;
+            border-left-color: #1a5276;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 1.2em;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Contenuto principale */
+        .main {
+            flex: 1;
+            padding: 30px;
+            background: #fafbfc;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Header sezioni */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .exercises-count {
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        /* Layout per esercizi */
+        .exercises-container {
+            min-height: 600px;
+        }
+
+        /* Form Styles */
+        .exercise-form, .event-form {
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+
+        .input-hint {
+            color: #6c757d;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="date"],
+        input[type="time"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Opzioni */
+        .options-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .option-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .option-input {
+            flex: 1;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .btn-add {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add:hover {
+            background: #219a52;
+            transform: translateY(-1px);
+        }
+
+        .correct-option {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+        }
+
+        /* Bottoni */
+        .btn-publish, .btn-create-event {
+            background: linear-gradient(135deg, #27ae60, #219a52);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-publish:hover, .btn-create-event:hover {
+            background: linear-gradient(135deg, #219a52, #27ae60);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Liste */
+        .exercises-list,
+        .corrections-list,
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .exercise-card,
+        .correction-card,
+        .event-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover,
+        .correction-card:hover,
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+            border-color: #3498db;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .exercise-question {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1em;
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-tag {
+            background: #e9ecef;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .exercise-options {
+            margin: 15px 0;
+        }
+
+        .option-item-user {
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option-item-user:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .option-item-user.selected {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .option-item-user.correct {
+            border-color: #27ae60;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .option-item-user.incorrect {
+            border-color: #e74c3c;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .option-text {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .exercise-explanation {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #3498db;
+            font-size: 0.9em;
+        }
+
+        .next-exercise-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .next-exercise-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Tandem request */
+        .tandem-request {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        /* Corrections */
+        .correction-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .correction-form {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        /* Open answer */
+        .open-answer-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        /* Events */
+        .event-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .event-date {
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+
+        .event-location {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .event-description {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.9em;
+        }
+
+        /* Badges */
+        .premium-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #856404;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .tandem-badge {
+            background: #9b59b6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .location-badge {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        /* Event Filters */
+        .event-filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .event-filters input {
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-size: 0.9em;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .event-filters input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #34495e;
+                padding: 20px 0;
+            }
+            
+            .nav {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 20px;
+                gap: 10px;
+            }
+            
+            .nav-section {
+                margin-bottom: 0;
+                flex-shrink: 0;
+            }
+            
+            .nav-btn {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+                padding: 12px 20px;
+                flex-direction: column;
+                gap: 5px;
+                min-width: 100px;
+            }
+            
+            .nav-btn.active {
+                border-left: none;
+                border-bottom-color: #1a5276;
+            }
+            
+            .nav-title {
+                display: none;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .main {
+                padding: 20px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .event-filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-container">
+                        <div class="logo-text">
+                            <h1>SuperPractice</h1>
+                            <p class="tagline">Practice anywhere, as much as possible</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filters">
+                    <select id="filter-language">
+                        <option value="">All languages</option>
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="german">German</option>
+                        <option value="italian">Italian</option>
+                        <option value="chinese">Chinese</option>
+                    </select>
+                    
+                    <select id="filter-topic">
+                        <option value="">All topics</option>
+                    </select>
+                    
+                    <select id="filter-tutor">
+                        <option value="">All tutors</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <aside class="sidebar">
+                <nav class="nav">
+                    <div class="nav-section">
+                        <div class="nav-title">PRACTICE</div>
+                        <button class="nav-btn active" data-section="storm">
+                            <span class="nav-icon">⚡</span>
+                            <span class="nav-text">Storm</span>
+                        </button>
+                        <button class="nav-btn" data-section="practice-native">
+                            <span class="nav-icon">👑</span>
+                            <span class="nav-text">Practice with a Native</span>
+                        </button>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <div class="nav-title">CREATE</div>
+                        <button class="nav-btn" data-section="create-exercise">
+                            <span class="nav-icon">✨</span>
+                            <span class="nav-text">Create Exercise</span>
+                        </button>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-title">COMMUNITY</div>
+                        <button class="nav-btn" data-section="events-exchanges">
+                            <span class="nav-icon">📅</span>
+                            <span class="nav-text">Events and Exchanges</span>
+                        </button>
+                    </div>
+                </nav>
+            </aside>
+
+            <main class="main">
+                <section id="storm" class="section active">
+                    <div class="section-header">
+                        <h2>Storm - Quick Practice</h2>
+                        <div class="exercises-count" id="storm-count">0 exercises</div>
+                    </div>
+                    <div class="exercises-container">
+                        <div id="storm-list" class="exercises-list">
+                            <p>Loading exercises...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="practice-native" class="section">
+                    <div class="section-header">
+                        <h2>Practice with a Native</h2>
+                        <div class="exercises-count" id="native-count">0 exercises</div>
+                    </div>
+                    <div class="exercises-container">
+                        <div id="native-list" class="exercises-list">
+                            <p>Loading exercises...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="create-exercise" class="section">
+                    <h2>Create an Exercise</h2>
+                    <p class="section-subtitle">Anyone can create and share exercises</p>
+                    
+                    <form id="exercise-form" class="exercise-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name *</label>
+                                <input type="text" id="creator-name" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Language *</label>
+                                <select id="exercise-language" required>
+                                    <option value="">Select language</option>
+                                    <option value="english">English</option>
+                                    <option value="spanish">Spanish</option>
+                                    <option value="french">French</option>
+                                    <option value="german">German</option>
+                                    <option value="italian">Italian</option>
+                                    <option value="chinese">Chinese</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Topic *</label>
+                            <input type="text" id="exercise-topic" placeholder="Ex: Grammar, Vocabulary..." required>
+                            <small class="input-hint">This topic will appear in filters</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Exercise Type *</label>
+                            <select id="correction-type" required>
+                                <option value="auto">Auto-correction (Appears in Storm)</option>
+                                <option value="native">Native speaker correction (Appears in Practice with a Native)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Question *</label>
+                            <textarea id="question" placeholder="Enter the exercise question..." rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Answer Type *</label>
+                            <select id="answer-type" required>
+                                <option value="multiple">Multiple Choice</option>
+                                <option value="open">Open Answer</option>
+                            </select>
+                        </div>
+
+                        <div id="multiple-choice-section" class="options-section">
+                            <h3>Answer Options *</h3>
+                            <div id="options-container">
+                                <div class="option-item">
+                                    <input type="text" class="option-input" placeholder="Option 1" required>
+                                    <button type="button" class="btn-delete" onclick="removeOption(this)">Delete</button>
+                                </div>
+                                <div class="option-item">
+                                    <input type="text" class="option-input" placeholder="Option 2" required>
+                                    <button type="button" class="btn-delete" onclick="removeOption(this)">Delete</button>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn-add" onclick="addOption()">
+                                <span>+</span>
+                                Add option
+                            </button>
+                            
+                            <div class="correct-option">
+                                <label>Select the correct answer:</label>
+                                <select id="correct-option">
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="open-answer-section" class="open-answer-section hidden">
+                            <h3>Open Answer Exercise</h3>
+                            <p>Students will be able to write free-form answers that native speakers can correct.</p>
+                        </div>
+
+                        <div class="tandem-request">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="tandem-request">
+                                    Request Tandem Practice for this exercise
+                                </label>
+                                <small class="input-hint">If checked, users can request to practice this topic with you</small>
+                            </div>
+                            
+                            <div id="tandem-details" class="hidden">
+                                <div class="form-group">
+                                    <label>Your available languages for tandem</label>
+                                    <input type="text" id="tandem-languages" placeholder="Ex: English, Spanish, French">
+                                </div>
+                                <div class="form-group">
+                                    <label>Preferred practice schedule</label>
+                                    <input type="text" id="tandem-schedule" placeholder="Ex: Weekends, Evenings">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Explanation</label>
+                            <textarea id="explanation" placeholder="Explain why this answer is correct..." rows="4"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-publish">
+                                <span>🚀</span>
+                                Publish Exercise
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="events-exchanges" class="section">
+                    <div class="section-header">
+                        <h2>Events and Exchanges</h2>
+                        <button class="btn-create-event" onclick="showEventForm()">
+                            <span>➕</span>
+                            Create New Event
+                        </button>
+                    </div>
+
+                    <div class="event-filters">
+                        <input type="text" id="filter-city" placeholder="Filter by city name...">
+                    </div>
+
+                    <div id="event-form" class="event-form hidden">
+                        <h3>New Event</h3>
+                        <div class="form-group">
+                            <label>Event Title *</label>
+                            <input type="text" id="event-title" placeholder="Event title">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date *</label>
+                                <input type="date" id="event-date">
+                            </div>
+                            <div class="form-group">
+                                <label>Time *</label>
+                                <input type="time" id="event-time">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Location Type</label>
+                            <select id="location-type">
+                                <option value="online">Online</option>
+                                <option value="cafe">Cafe</option>
+                                <option value="library">Library</option>
+                                <option value="park">Park</option>
+                                <option value="school">School/University</option>
+                                <option value="community-center">Community Center</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Location Name *</label>
+                            <input type="text" id="event-location" placeholder="Name of the location">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City *</label>
+                                <input type="text" id="event-city" placeholder="Enter city name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" id="event-address" placeholder="Street address">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Language</label>
+                            <select id="event-language">
+                                <option value="english">English</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="french">French</option>
+                                <option value="german">German</option>
+                                <option value="italian">Italian</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="multilingual">Multilingual</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="event-description" placeholder="Event description..." rows="4"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-publish" onclick="saveEvent()">
+                                <span>💾</span>
+                                Save Event
+                            </button>
+                            <button type="button" class="next-exercise-btn" onclick="hideEventForm()">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="events-full">
+                        <h3>Upcoming Events</h3>
+                        <div id="events-list" class="events-list">
+                            <!-- Events will be added here dynamically -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
